@@ -15,6 +15,7 @@ app.use(middleware.CORS)
 
 //TODO ADD our User Controller here
 app.use("/user", controllers.userController);
+app.use('/car', controllers.carController);
 
 //TODO ADD our Cars Info Controller here
 
