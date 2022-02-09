@@ -1,5 +1,5 @@
 const Express = require('express');
-const app = Express;
+const app = Express();
 const bcrypt = require("bcryptjs");
 
 app.use(Express.json());
