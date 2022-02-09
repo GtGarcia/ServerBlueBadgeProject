@@ -31,7 +31,11 @@ const User = db.define("user",{
         type: DataTypes.STRING(100),
         allowNull: false,
         unique: false
-        
+    },
+    pfpURL: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: false
     }
 
 })
