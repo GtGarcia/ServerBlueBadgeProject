@@ -44,7 +44,7 @@ const Car = db.define('car', {
         unique: false
     },
     owner_id: {
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
     }
     
 });
