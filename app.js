@@ -14,6 +14,7 @@ app.use(Express.json());
 app.use(middleware.CORS)
 
 app.use("/user", controllers.userController);
+app.use('/car', controllers.carController);
 
 //TODO ADD our Cars Info Controller here
 

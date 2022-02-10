@@ -1,5 +1,6 @@
 //code for index file
 
 module.exports = {
-    userController: require('./usercontroller')
+    userController: require('./usercontroller'),
+    carController: require('./carListingCreateConttroller')
 }
