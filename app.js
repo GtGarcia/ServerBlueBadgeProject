@@ -8,7 +8,6 @@ const dbConnection = require('./db');
 const middleware = require('./middleware');
 
 const bcrypt = require("bcryptjs");
-const { FORCE } = require("sequelize/types/index-hints");
 
 app.use(Express.json());
 

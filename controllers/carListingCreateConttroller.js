@@ -63,7 +63,7 @@ router.get ('/', async (req, res) => {
 })
 
 //UPDATE: 
-router.put("/:id", validateJWT, async (req, res) => {
+router.put("/:id", async (req, res) => {
     const { description, definition, result } = req.body.log;
     // const id = req.user;
     const carId = req.params.id;
