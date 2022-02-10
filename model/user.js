@@ -12,11 +12,11 @@ const User = db.define("user",{
         allowNull: false,
         unique: false,
     },
-    // middleName: {
-    //     type: DataTypes.STRING(100),
-    //     allowNull: true,
-    //     unique: false,
-    // },
+    middleName: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+        unique: false,
+    },
     userName: {
         type:DataTypes.STRING(100),
         allowNull: false,
@@ -36,7 +36,12 @@ const User = db.define("user",{
         type: DataTypes.STRING,
         allowNull: false,
         unique: false
-    }
+    },
+    phoneNumber: {
+        type: DataTypes.INTEGER(10),
+        allowNull: true,
+        unique: false
+    },
 
 })
 
