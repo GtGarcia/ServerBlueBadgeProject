@@ -8,6 +8,7 @@ const dbConnection = require('./db');
 const middleware = require('./middleware');
 
 const bcrypt = require("bcryptjs");
+const { FORCE } = require("sequelize/types/index-hints");
 
 app.use(Express.json());
 
@@ -20,7 +21,7 @@ app.use('/car', controllers.carController);
 
 
 dbConnection.authenticate()
-.then(()=> dbConnection.sync( ))
+.then(()=> dbConnection.sync(  ))
 .then(() => {
     app.listen(process.env.PORT, () => {
         console.log(`[server]: app.js is listening on 3000`)

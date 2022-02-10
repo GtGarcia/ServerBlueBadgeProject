@@ -38,7 +38,7 @@ const User = db.define("user",{
         unique: false
     },
     phoneNumber: {
-        type: DataTypes.INTEGER(10),
+        type: DataTypes.STRING(10),
         allowNull: true,
         unique: false
     },

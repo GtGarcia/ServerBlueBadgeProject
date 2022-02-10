@@ -21,6 +21,7 @@ router.post('/create', async (req,res) => {
     }
     try {
         const newCar = await CarModel.create(carCreate);
+        console.log(carCreate)
         res.status(200).json({
             message: "Car listing Created!",
             car: newCar
@@ -60,5 +61,37 @@ router.get ('/', async (req, res) => {
         res.status(500).json({ error: err});
     }
 })
+
+//UPDATE: 
+router.put("/:id", validateJWT, async (req, res) => {
+    const { description, definition, result } = req.body.log;
+    // const id = req.user;
+    const carId = req.params.id;
+    const ownerid = req.user.id;
+    
+    const query = {
+        where: {
+            id: carId,
+            owner_id: ownerid
+        },
+    };
+
+    const newCar = {
+        description: description,
+        definition: definition,
+        result: result,
+        owner_id: ownerid
+        
+    };
+
+    try {
+        const updatedCar = await logModel.update(newCar, query);
+        res.status(200).json({updatedCar, message: "Listing has been updated" });
+    } catch (err) {
+        res.status(500).json({ error: err });
+    }
+});
+
+
 
 module.exports = router;
