@@ -13,7 +13,6 @@ app.use(Express.json());
 
 app.use(middleware.CORS)
 
-//TODO ADD our User Controller here
 app.use("/user", controllers.userController);
 
 //TODO ADD our Cars Info Controller here
