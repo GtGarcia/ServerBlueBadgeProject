@@ -92,6 +92,22 @@ router.put("/:id", async (req, res) => {
     }
 });
 
+router.delete("/:id", validateJWT,  async (req, res) => {
+    const carId = req.params.id;
+    const ownerid = req.user.id;
 
+    try {
+        const query = {
+            where: {
+                id: carId,
+                owner_id: ownerid,
+            },
+        };
+        await logModel.destroy(query);
+        res.status(201).json({ message: "Item has been deleted" });
+    } catch (err) {
+        res.status(500).json({ message: `${err}` });
+    }
+});
 
 module.exports = router;
