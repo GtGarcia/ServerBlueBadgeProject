@@ -66,6 +66,10 @@ router.post("/login", async (req, res) => {
                     message: `User logged in`,
                     user: loginUser,
                     sessionToken: token
+                }) 
+            } else {
+                res.status(401).json({
+                    message: 'Incorrect Email or Password'
                 })
             }
         } else {

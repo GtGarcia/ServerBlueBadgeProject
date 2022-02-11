@@ -1,12 +1,10 @@
 const router = require('express').Router();
 const { CarModel } = require('../model');
-const { UCE } = require('sequelize/lib/errors');
-const jwt = require('jsonwebtoken');
+let validateJWT = require("../middleware/validate-jwt")
 
-
-router.post('/create', async (req,res) => {
+router.post('/create', validateJWT, async (req,res) => {
     let { price, condition, transmissionType, color, type, numberOfDoors, miles, vehicleLocation } = req.body.car;
-
+    
     let carCreate = {
         price,
         condition,
@@ -16,8 +14,7 @@ router.post('/create', async (req,res) => {
         numberOfDoors,
         miles,
         vehicleLocation,
-        // TODO - This code needs to be used when JWT is added?
-        //?          owner_id: req.user.id,
+        owner_id: req.user.id
     }
     try {
         const newCar = await CarModel.create(carCreate);
@@ -33,7 +30,7 @@ router.post('/create', async (req,res) => {
 })
 
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateJWT, async (req, res) => {
 
     const carID = req.params.id
 
@@ -50,7 +47,7 @@ router.get('/:id', async (req, res) => {
 })
 
 
-router.get ('/', async (req, res) => {
+router.get ('/', validateJWT, async (req, res) => {
     try{
         const listing = await CarModel.findAll();
         res.status(200).json({
@@ -63,8 +60,8 @@ router.get ('/', async (req, res) => {
 })
 
 //UPDATE: 
-router.put("/:id", async (req, res) => {
-    const { description, definition, result } = req.body.log;
+router.put("/:id", validateJWT, async (req, res) => {
+    let { price, condition, transmissionType, color, type, numberOfDoors, miles, vehicleLocation } = req.body.car;
     // const id = req.user;
     const carId = req.params.id;
     const ownerid = req.user.id;
@@ -76,18 +73,21 @@ router.put("/:id", async (req, res) => {
         },
     };
 
-    const newCar = {
-        description: description,
-        definition: definition,
-        result: result,
-        owner_id: ownerid
-        
-    };
-
+    let newCar = {
+        price,
+        condition,
+        transmissionType,
+        color,
+        type,
+        numberOfDoors,
+        miles,
+        vehicleLocation,
+    }
     try {
-        const updatedCar = await logModel.update(newCar, query);
+        const updatedCar = await CarModel.update(newCar, query);
         res.status(200).json({updatedCar, message: "Listing has been updated" });
     } catch (err) {
+        console.log(err)
         res.status(500).json({ error: err });
     }
 });
@@ -103,7 +103,7 @@ router.delete("/:id", validateJWT,  async (req, res) => {
                 owner_id: ownerid,
             },
         };
-        await logModel.destroy(query);
+        await CarModel.destroy(query);
         res.status(201).json({ message: "Item has been deleted" });
     } catch (err) {
         res.status(500).json({ message: `${err}` });
