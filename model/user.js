@@ -31,8 +31,17 @@ const User = db.define("user",{
         type: DataTypes.STRING(100),
         allowNull: false,
         unique: false
-        
-    }
+    },
+    pfpURL: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        unique: false
+    },
+    phoneNumber: {
+        type: DataTypes.STRING(10),
+        allowNull: true,
+        unique: false
+    },
 
 })
 

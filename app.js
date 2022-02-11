@@ -13,7 +13,6 @@ app.use(Express.json());
 
 app.use(middleware.CORS)
 
-//TODO ADD our User Controller here
 app.use("/user", controllers.userController);
 app.use('/car', controllers.carController);
 
@@ -21,7 +20,7 @@ app.use('/car', controllers.carController);
 
 
 dbConnection.authenticate()
-.then(()=> dbConnection.sync())
+.then(()=> dbConnection.sync(  ))
 .then(() => {
     app.listen(process.env.PORT, () => {
         console.log(`[server]: app.js is listening on 3000`)
