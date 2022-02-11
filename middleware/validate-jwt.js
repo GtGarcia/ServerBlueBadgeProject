@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { UserModel } = require("../models")
+const { UserModel } = require("../model")
 const validateJWT = async(req, res, next) => {
     try {
         if (req.method == "OPTIONS") {
@@ -9,6 +9,7 @@ const validateJWT = async(req, res, next) => {
             req.headers.authorization.includes("Bearer")
         ) {
             const { authorization } = req.headers
+            // console.log("authorization --> ", authorization);
             const payload = authorization
             ? jwt.verify(
                 authorization.includes("Bearer")
@@ -17,10 +18,11 @@ const validateJWT = async(req, res, next) => {
                 process.env.JWT_SECRET
             )
             : undefined;
+        
 
             if (payload) {
                 let foundUser = await UserModel.findOne({ where: { id: payload.id } });
-
+                // console.log("foundUser -->", foundUser)
                 if (foundUser) {
                     req.user = foundUser;
                     next()
