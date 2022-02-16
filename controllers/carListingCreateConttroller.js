@@ -3,7 +3,7 @@ const { CarModel } = require('../model');
 let validateJWT = require("../middleware/validate-jwt")
 
 router.post('/create', validateJWT, async (req,res) => {
-    let { price, condition, transmissionType, color, type, numberOfDoors, miles, vehicleLocation } = req.body.car;
+    let { price, condition, transmissionType, color, type, numberOfDoors, miles, vehicleLocation } = req.body;
     
     let carCreate = {
         price,
@@ -30,6 +30,37 @@ router.post('/create', validateJWT, async (req,res) => {
 })
 
 
+
+
+
+router.get ('/', validateJWT, async (req, res) => {
+    try{
+        const listing = await CarModel.findAll();
+        res.status(200).json({
+            message: 'Here you go!',
+            listing
+        })
+    } catch(err) {
+        res.status(500).json({ error: err});
+    }
+})
+
+
+router.get('/mine', validateJWT,async (req, res) => {
+    let { id } = req.user
+    try{
+        const userCar = await  CarModel.findAll({
+            where: {
+                owner_id: id
+            }
+        });
+        res.status(200).json(userCar);
+    } catch (err) {
+        res.status(500).json({ error: err })
+    }
+})
+
+
 router.get('/:id', validateJWT, async (req, res) => {
 
     const carID = req.params.id
@@ -46,18 +77,6 @@ router.get('/:id', validateJWT, async (req, res) => {
     }
 })
 
-
-router.get ('/', validateJWT, async (req, res) => {
-    try{
-        const listing = await CarModel.findAll();
-        res.status(200).json({
-            message: 'Here you go!',
-            listing
-        })
-    } catch(err) {
-        res.status(500).json({ error: err});
-    }
-})
 
 //UPDATE: 
 router.put("/:id", validateJWT, async (req, res) => {
