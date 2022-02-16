@@ -11,15 +11,15 @@ const validateJWT = async(req, res, next) => {
             const { authorization } = req.headers
             // console.log("authorization --> ", authorization);
             const payload = authorization
-            ? jwt.verify(
-                authorization.includes("Bearer")
-                ? authorization.split(" ")[1]
-                : authorization,
-                process.env.JWT_SECRET_KEY
-            )
-            : undefined;
-        
-
+            ? jwt.verify(authorization, process.env.JWT_SECRET_KEY
+                )
+                : undefined;
+                
+                
+                // authorization.includes("Bearer")
+                // ? authorization.split(" ")[1]
+                // : authorization,
+                // process.env.JWT_SECRET_KEY
             if (payload) {
                 let foundUser = await UserModel.findOne({ where: { id: payload.id } });
                 // console.log("foundUser -->", foundUser)
